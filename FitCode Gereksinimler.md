@@ -38,6 +38,10 @@ GEREKSİNİMLER
 
 16. **BESİN ARAMA:**(Elif DEDEOĞLU)
 
+# Gereksinim Dağılımları
+1. [Tuğba GÜNDOĞDU'nun Gereksinimleri](Tuğba_gereksinim_analizleri.md)
+2. [Elif DEDEOĞLU'nun Gereksinimleri](Ali-Atabak-Gereksinimle.md)
+
 
 
 
