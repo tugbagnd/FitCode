@@ -40,7 +40,7 @@ GEREKSİNİMLER
 
 # Gereksinim Dağılımları
 1. [Tuğba GÜNDOĞDU'nun Gereksinimleri](Tuğba_gereksinim_analizleri.md)
-2. [Elif DEDEOĞLU'nun Gereksinimleri](Ali-Atabak-Gereksinimle.md)
+2. [Elif DEDEOĞLU'nun Gereksinimleri](elif_gereksinim_analizleri.md)
 
 
 
