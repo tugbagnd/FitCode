@@ -11,4 +11,4 @@
 
 **Proje Ekibi:** Tuğba GÜNDOĞDU, Elif DEDEOĞLU
 
-**[Gereksinimler](FitCode Gereksinimler.md)**
+**1. [Gereksinimler](FitCode Gereksinimler.md)**
