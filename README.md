@@ -17,3 +17,6 @@
 **[Durum Diyagramı](Durum_Diyagramı.png)**
 
 **[Tuğba Durum Senaryoları](Tugba_DurumSenaryoları.pdf)**
+
+**[Elif Durum Senaryoları](Elif_DurumSenaryoları.pdf)**
+
