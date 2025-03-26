@@ -13,3 +13,5 @@
 **Proje Ekibi :** Tuğba GÜNDOĞDU, Elif DEDEOĞLU
 
 **[Gereksinimler](FitCode_Gereksinimler.md)**
+
+**[Tuğba Durum Senaryoları](Tugba_DurumSenaryoları.pdf)**
