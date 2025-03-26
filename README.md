@@ -14,4 +14,6 @@
 
 **[Gereksinimler](FitCode_Gereksinimler.md)**
 
+**[Durum Diyagramı](Durum_Diyagramı.jpg)**
+
 **[Tuğba Durum Senaryoları](Tugba_DurumSenaryoları.pdf)**
