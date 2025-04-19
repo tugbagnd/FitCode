@@ -107,9 +107,9 @@
   </div>
 
   <script>
-    // Kayıt formu gönderildiğinde
+    
     document.querySelector("form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Sayfanın yeniden yüklenmesini engeller
+      event.preventDefault(); 
 
       let ad = document.querySelector("input[name='ad']").value;
       let soyad = document.querySelector("input[name='soyad']").value;
@@ -117,13 +117,13 @@
       let sifre = document.querySelector("input[name='sifre']").value;
       let sifreTekrar = document.querySelector("input[name='sifreTekrar']").value;
 
-      // Şifre kontrolü
+      
       if (sifre !== sifreTekrar) {
         alert("Şifreler uyuşmuyor!");
         return;
       }
 
-      // Kullanıcı bilgilerini localStorage'a kaydetme
+      
       let kullanici = {
         ad: ad,
         soyad: soyad,
@@ -133,7 +133,7 @@
       localStorage.setItem("kullanici", JSON.stringify(kullanici));
 
       alert("Kayıt başarılı! Giriş yapabilirsiniz.");
-      window.location.href = "index.html"; // Kayıt başarılıysa giriş sayfasına yönlendir
+      window.location.href = "index.html"; 
     });
   </script>
 </body>

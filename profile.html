@@ -40,7 +40,7 @@
       position: absolute;
       top: 0px;
       left: 0px;
-      width: 200px; /* Logo boyutunu 4 katına çıkardık */
+      width: 200px; 
       height: auto;
     }
 
@@ -145,39 +145,39 @@
   </div>
 
   <script>
-    // Profil bilgilerini yerel depolamaya kaydetme ve yükleme
+    
     function updateProfile() {
-      // Form verilerini al
+      
       var name = document.getElementById('name').value;
       var age = document.getElementById('age').value;
       var weight = document.getElementById('weight').value;
       var height = document.getElementById('height').value;
 
-      // Verileri localStorage'a kaydet
+      
       localStorage.setItem('name', name);
       localStorage.setItem('age', age);
       localStorage.setItem('weight', weight);
       localStorage.setItem('height', height);
 
-      // Vücut Kitle İndeksi (BMI) hesaplama
+      
       var bmi = calculateBMI(weight, height);
       document.getElementById('bmi').value = bmi;
 
-      // Verileri localStorage'a kaydet
+      
       localStorage.setItem('bmi', bmi);
 
-      // Kullanıcıyı güncellenmiş profiline yönlendir
+      
       alert('Profiliniz güncellendi!');
       window.location.href = 'profile.html';
     }
 
-    // BMI hesaplama
+    
     function calculateBMI(weight, height) {
-      height = height / 100; // cm'den metreye çevir
-      return (weight / (height * height)).toFixed(1); // BMI hesapla
+      height = height / 100; 
+      return (weight / (height * height)).toFixed(1); 
     }
 
-    // Sayfa yüklendiğinde verileri yerel depolamadan al ve sayfada göster
+    
     window.onload = function() {
       if (localStorage.getItem('name')) {
         document.getElementById('name').value = localStorage.getItem('name');
