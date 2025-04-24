@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +15,12 @@
     }
 
     body {
-      background: url('salatakız.png') no-repeat center center fixed; 
-      background-size: 70%; 
-      background-color: rgba(250,241,227,255);
+      background: url('salatakız.png') no-repeat center center fixed;
+      /* Resmi arka planda yerleştiriyoruz */
+      background-size: 70%;
+      /* Resmin boyutunu %70 yapıyoruz */
+      background-color: rgba(250, 241, 227, 255);
+      /* Sağ ve sol taraflarda boş kalan alanları bej rengi yapıyoruz */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -39,7 +43,8 @@
       left: 20px;
       width: 200px;
       height: auto;
-      opacity: 0.7; 
+      opacity: 0.7;
+      /* Logo'yu %70 saydam yapıyoruz */
     }
 
     .logo-container {
@@ -69,7 +74,8 @@
       text-align: center;
     }
 
-    input, button {
+    input,
+    button {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
@@ -106,6 +112,7 @@
     }
   </style>
 </head>
+
 <body>
   <img src="logo1.jpg" alt="Logo" class="logo">
 
@@ -118,7 +125,7 @@
   <div class="container">
     <h2>Giriş Yap</h2>
     <form>
-      <input type="text" name="kullaniciAdi" placeholder="E-posta" required>
+      <input type="text" name="kullaniciAdi" placeholder="E Posta" required>
       <input type="password" name="sifre" placeholder="Şifre" required>
       <button type="submit">Giriş</button>
     </form>
@@ -128,7 +135,7 @@
   </div>
 
   <script>
-    document.querySelector("form").addEventListener("submit", function(event) {
+    document.querySelector("form").addEventListener("submit", function (event) {
       event.preventDefault();
 
       let kullaniciAdi = document.querySelector("input[name='kullaniciAdi']").value;
@@ -145,4 +152,5 @@
     });
   </script>
 </body>
+
 </html>
