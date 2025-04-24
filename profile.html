@@ -142,6 +142,16 @@
     #fileInput {
       display: none;
     }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .button-group button {
+      flex: 1;
+    }
   </style>
 </head>
 
@@ -204,7 +214,10 @@
       </div>
       <div id="calorieResult">Almanız gereken kalori: -</div>
 
-      <button type="button" onclick="calculateEverything()">Hesapla</button>
+      <div class="button-group">
+        <button type="button" onclick="calculateEverything()">Hesapla</button>
+        <button type="button" onclick="updateProfile()">Güncelle</button>
+      </div>
     </form>
 
     <div class="link">
@@ -213,6 +226,38 @@
   </div>
 
   <script>
+    // Sayfa yüklendiğinde kayıtlı bilgileri yükle
+    window.onload = function() {
+      if(localStorage.getItem('name')) {
+        document.getElementById('name').value = localStorage.getItem('name');
+      }
+      if(localStorage.getItem('age')) {
+        document.getElementById('age').value = localStorage.getItem('age');
+      }
+      if(localStorage.getItem('weight')) {
+        document.getElementById('weight').value = localStorage.getItem('weight');
+      }
+      if(localStorage.getItem('height')) {
+        document.getElementById('height').value = localStorage.getItem('height');
+      }
+      if(localStorage.getItem('gender')) {
+        document.getElementById('gender').value = localStorage.getItem('gender');
+      }
+      if(localStorage.getItem('goal')) {
+        document.getElementById('goal').value = localStorage.getItem('goal');
+      }
+      if(localStorage.getItem('bmi')) {
+        document.getElementById('bmi').value = localStorage.getItem('bmi');
+      }
+      if(localStorage.getItem('calories')) {
+        document.getElementById('calorieResult').innerText = "Almanız gereken kalori: " + 
+          Math.round(localStorage.getItem('calories')) + " kcal";
+      }
+      if(localStorage.getItem('profileImage')) {
+        document.getElementById('profileImage').src = localStorage.getItem('profileImage');
+      }
+    };
+
     function calculateEverything() {
       var name = document.getElementById('name').value;
       var age = parseInt(document.getElementById('age').value);
@@ -246,12 +291,36 @@
       document.getElementById('calorieResult').innerText = "Almanız gereken kalori: " + Math.round(calorie) + " kcal";
 
       localStorage.setItem('calories', calorie);
+    }
+
+    function updateProfile() {
+      var name = document.getElementById('name').value;
+      var age = parseInt(document.getElementById('age').value);
+      var weight = parseFloat(document.getElementById('weight').value);
+      var height = parseFloat(document.getElementById('height').value);
+      var gender = document.getElementById('gender').value;
+      var goal = document.getElementById('goal').value;
+
+      if (!name || !age || !weight || !height || !gender || !goal) {
+        alert("Lütfen tüm bilgileri doldurun.");
+        return;
+      }
+
+      // Tüm bilgileri localStorage'a kaydet
       localStorage.setItem('name', name);
       localStorage.setItem('age', age);
       localStorage.setItem('weight', weight);
       localStorage.setItem('height', height);
       localStorage.setItem('gender', gender);
       localStorage.setItem('goal', goal);
+      
+      // Profil fotoğrafını da kaydet (eğer yüklendiyse)
+      var profileImage = document.getElementById('profileImage').src;
+      if(profileImage && !profileImage.includes('data:image/svg+xml')) {
+        localStorage.setItem('profileImage', profileImage);
+      }
+
+      alert("Profil bilgileriniz başarıyla güncellendi!");
     }
 
     function calculateBMI(weight, height) {
