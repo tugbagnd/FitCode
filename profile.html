@@ -203,6 +203,7 @@
         <label for="goal">Hedefiniz:</label>
         <select id="goal" name="goal" required>
           <option value="">Seçiniz</option>
+          <option value="lose">Kilo Vermek</option>
           <option value="gain">Kilo Almak</option>
           <option value="maintain">Kilo Koruma</option>
           <option value="muscle">Kas Alımı</option>
@@ -285,8 +286,10 @@
       }
 
       let calorie = bmr;
-      if (goal === "gain") calorie += 500;
-      else if (goal === "muscle") calorie += 300;
+      if (goal === "lose") calorie -= 500;  // Kilo vermek için 500 kcal azalt
+      else if (goal === "gain") calorie += 500;  // Kilo almak için 500 kcal artır
+      else if (goal === "muscle") calorie += 300;  // Kas alımı için 300 kcal artır
+      // Kilo koruma için değişiklik yapma
 
       document.getElementById('calorieResult').innerText = "Almanız gereken kalori: " + Math.round(calorie) + " kcal";
 
