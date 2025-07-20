@@ -1,4 +1,5 @@
 const Article = require("../models1/Article1");
+const sendToQueue = require("../utils/sendToQueue");
 
 // ✅ Belirli kategoriye ait makaleleri getir
 exports.getArticlesByCategory = async (req, res) => {
@@ -21,15 +22,19 @@ exports.getAllArticles = async (req, res) => {
     }
 };
 
-// ✅ Yeni makale ekle
+// ✅ Yeni makale ekle (RabbitMQ kuyruğuna da mesaj gönderiyor)
 exports.addArticle = async (req, res) => {
-    try {
-        const newArticle = new Article(req.body);
-        await newArticle.save();
-        res.status(201).json({ message: "Makale başarıyla eklendi", article: newArticle });
-    } catch (err) {
-        res.status(400).json({ message: "Makale eklenemedi", error: err.message });
-    }
+  try {
+    const newArticle = new Article(req.body);
+    await newArticle.save();
+
+    // RabbitMQ kuyruğuna mesaj gönder
+    await sendToQueue("fitcode_queue", JSON.stringify(newArticle));
+
+    res.status(201).json({ message: "Makale başarıyla eklendi", article: newArticle });
+  } catch (err) {
+    res.status(400).json({ message: "Makale eklenemedi", error: err.message });
+  }
 };
 
 // ✅ Makaleyi ID ile güncelle

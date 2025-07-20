@@ -1,19 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-// Controller fonksiyonlar�
+// Controller fonksiyonları
 const {
     addWater,
     getTodayWater
 } = require("../controllers1/waterController");
 
-// JWT do�rulama middleware'i
+// JWT doğrulama middleware'i
 const { authenticateToken } = require("../middleware/authMiddleware");
 
-// Su ekleme (g�nl�k)
+// Su ekleme (günlük)
 router.post("/", authenticateToken, addWater);
 
-// Bug�nk� toplam su t�ketimini alma
+// Bugünkü toplam su tüketimini alma
 router.get("/today", authenticateToken, getTodayWater);
 
 module.exports = router;

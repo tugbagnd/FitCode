@@ -1,12 +1,15 @@
 const Water = require("../models1/Water");
+const redisClient = require("../utils/redisClient");
 
-// ✅ Su tüketimini kaydet ve toplamı döndür
+// ✅ Su tüketimini kaydet ve toplamı döndür + Redis güncelle
 exports.addWater = async (req, res) => {
     try {
         const { amount } = req.body;
+        const userId = req.user.id;
+        const key = `water:${userId}`;
 
         const newEntry = new Water({
-            userId: req.user.id,
+            userId,
             amount,
         });
 
@@ -14,7 +17,7 @@ exports.addWater = async (req, res) => {
 
         // Türkiye saatine göre bugünün başlangıcı ve sonu
         const now = new Date();
-        const trOffset = 3 * 60 * 60 * 1000; // UTC+3
+        const trOffset = 3 * 60 * 60 * 1000;
         const localNow = new Date(now.getTime() + trOffset);
 
         const startOfDay = new Date(Date.UTC(localNow.getUTCFullYear(), localNow.getUTCMonth(), localNow.getUTCDate()));
@@ -23,7 +26,7 @@ exports.addWater = async (req, res) => {
 
         // Bugünkü tüm kayıtları getir
         const records = await Water.find({
-            userId: req.user.id,
+            userId,
             createdAt: {
                 $gte: startOfDay,
                 $lt: endOfDay,
@@ -32,7 +35,9 @@ exports.addWater = async (req, res) => {
 
         const total = records.reduce((sum, item) => sum + item.amount, 0);
 
-        // amount da döndürülüyor!
+        // 🔄 Redis'e güncel toplamı yaz
+        await redisClient.set(key, total);
+
         res.status(201).json({
             message: "Su tüketimi kaydedildi.",
             amount,
@@ -46,14 +51,22 @@ exports.addWater = async (req, res) => {
     }
 };
 
-// ✅ Bugünkü toplam su tüketimini getir (Türkiye saatine göre)
+// ✅ Bugünkü toplam su tüketimini getir (önce Redis, yoksa MongoDB)
 exports.getTodayWater = async (req, res) => {
     try {
         const userId = req.user.id;
+        const key = `water:${userId}`;
 
-        // Türkiye saatine göre tarih hesapla
+        // 🔍 Önce Redis'e bak
+        let total = await redisClient.get(key);
+
+        if (total !== null) {
+            return res.json({ total: parseInt(total), source: "redis" });
+        }
+
+        // Eğer Redis'te yoksa veritabanından çek
         const now = new Date();
-        const trOffset = 3 * 60 * 60 * 1000; // UTC+3 farkı
+        const trOffset = 3 * 60 * 60 * 1000;
         const localNow = new Date(now.getTime() + trOffset);
 
         const startOfDay = new Date(Date.UTC(localNow.getUTCFullYear(), localNow.getUTCMonth(), localNow.getUTCDate()));
@@ -68,9 +81,12 @@ exports.getTodayWater = async (req, res) => {
             }
         });
 
-        const total = records.reduce((sum, item) => sum + item.amount, 0);
+        total = records.reduce((sum, item) => sum + item.amount, 0);
 
-        res.json({ total });
+        // 📥 Redis'e kaydet (sonraki isteklerde kullanmak için)
+        await redisClient.set(key, total);
+
+        res.json({ total, source: "mongodb" });
     } catch (err) {
         res.status(500).json({
             message: "Su verisi alınamadı",
